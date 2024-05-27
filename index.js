@@ -1,15 +1,3 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 8080;
+const bot = require('./telegramBot');
 
-app.use(express.json());
-
-require('./telegramBot');
-
-app.get('/', (req, res) => {
-  res.send('Tele_Translate_AI_bot is running');
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// The bot is set up and polling in bot.js, so index.js doesn't need additional code for now.
