@@ -13,8 +13,11 @@ const {
   handleDialectChange,
   handleLocationChange,
   handleEndChat,
-  handleKillChat
+  handleKillChat,
+  handleStartOver,
+  deleteAllMessages
 } = require('./services/chatService');
+const User = require('./models/User'); // Import User model
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const mongoUri = process.env.MONGO_URI;
@@ -33,8 +36,27 @@ mongoose.connect(mongoUri)
 
 const bot = new TelegramBot(token, { polling: true });
 
-bot.onText(/\/start/, (msg) => {
-  logger.info('Received /start command', msg);
+async function checkAndShowStartButton(bot, chatId) {
+  const user = await User.findOne({ userId: chatId });
+  if (!user) {
+    // User is new, show Start button
+    const options = {
+      reply_markup: {
+        keyboard: [
+          [{ text: 'Start', callback_data: 'start' }]
+        ],
+        resize_keyboard: true,
+        one_time_keyboard: true
+      },
+      parse_mode: 'Markdown'
+    };
+    await bot.sendMessage(chatId, `Welcome to *Tele_Translate_AI_bot*! Click *Start* to choose your language.`, options);
+  }
+}
+
+bot.onText(/\/start/, async (msg) => {
+  const chatId = msg.chat.id;
+  await checkAndShowStartButton(bot, chatId);
   handleStart(bot, msg);
 });
 
@@ -69,9 +91,20 @@ bot.on('callback_query', async (callbackQuery) => {
     });
   } else if (data === 'end_chat') {
     handleEndChat(bot, message);
+  } else if (data === 'start_over') {
+    handleStartOver(bot, message);
   }
 });
 
-bot.on('message', (msg) => handleMessage(bot, msg));
+bot.on('message', async (msg) => {
+  const chatId = msg.chat.id;
+  if (msg.text === 'Start') {
+    await handleStart(bot, msg);
+  } else if (msg.text === 'Start Over') {
+    await handleStartOver(bot, msg);
+  } else {
+    await handleMessage(bot, msg);
+  }
+});
 
 module.exports = bot;

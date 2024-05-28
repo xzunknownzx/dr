@@ -1,0 +1,27 @@
+2024-05-27T15:40:59.785Z [32minfo[39m: MongoDB connected
+2024-05-27T15:40:59.909Z [32minfo[39m: Received /start command
+2024-05-27T15:41:53.817Z [32minfo[39m: MongoDB connected
+2024-05-27T15:42:00.209Z [32minfo[39m: Received /start command
+2024-05-27T15:42:28.521Z [32minfo[39m: Received /kill command
+2024-05-27T15:42:36.339Z [32minfo[39m: Received /kill command
+2024-05-27T15:43:33.745Z [32minfo[39m: Received /start command
+2024-05-27T15:44:08.519Z [32minfo[39m: Received /start command
+2024-05-27T15:44:11.746Z [32minfo[39m: Received /kill command
+2024-05-27T15:44:18.803Z [32minfo[39m: Received /kill command
+2024-05-27T15:44:21.981Z [32minfo[39m: Received /start command
+2024-05-28T01:04:29.248Z [32minfo[39m: Received /start command
+2024-05-28T01:04:51.466Z [32minfo[39m: Received /start command
+2024-05-28T01:05:56.203Z [32minfo[39m: Received /kill command
+2024-05-28T01:25:15.706Z [32minfo[39m: MongoDB connected
+2024-05-28T01:33:13.190Z [32minfo[39m: MongoDB connected
+2024-05-28T01:33:48.881Z [32minfo[39m: MongoDB connected
+2024-05-28T01:46:06.502Z [32minfo[39m: MongoDB connected
+2024-05-28T01:54:37.270Z [32minfo[39m: MongoDB connected
+2024-05-28T01:56:34.281Z [32minfo[39m: Received /kill command
+2024-05-28T01:56:39.939Z [31merror[39m: Error translating message:
+2024-05-28T02:13:37.250Z [32minfo[39m: MongoDB connected
+2024-05-28T02:14:37.345Z [32minfo[39m: Received /kill command
+2024-05-28T02:18:34.643Z [32minfo[39m: MongoDB connected
+2024-05-28T02:20:50.090Z [32minfo[39m: Received /kill command
+2024-05-28T02:21:04.380Z [32minfo[39m: Received /kill command
+2024-05-28T02:36:06.248Z [32minfo[39m: MongoDB connected
