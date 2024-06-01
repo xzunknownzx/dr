@@ -13,11 +13,9 @@ const {
   handleDialectChange,
   handleLocationChange,
   handleEndChat,
-  handleKillChat,
-  handleStartOver,
-  deleteAllMessages
+  handleKillChat
 } = require('./services/chatService');
-const User = require('./models/User'); // Import User model
+const User = require('./models/User');
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
 const mongoUri = process.env.MONGO_URI;
@@ -27,7 +25,7 @@ if (!mongoUri) {
   process.exit(1);
 }
 
-mongoose.connect(mongoUri)
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => logger.info('MongoDB connected'))
   .catch((err) => {
     logger.error('MongoDB connection error:', err);
@@ -43,7 +41,7 @@ async function checkAndShowStartButton(bot, chatId) {
     const options = {
       reply_markup: {
         keyboard: [
-          [{ text: 'Start', callback_data: 'start' }]
+          [{ text: 'Start' }]
         ],
         resize_keyboard: true,
         one_time_keyboard: true
@@ -56,6 +54,7 @@ async function checkAndShowStartButton(bot, chatId) {
 
 bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
+  logger.info(`Received /start command from chatId: ${chatId}`, msg);
   await checkAndShowStartButton(bot, chatId);
   handleStart(bot, msg);
 });
@@ -91,17 +90,15 @@ bot.on('callback_query', async (callbackQuery) => {
     });
   } else if (data === 'end_chat') {
     handleEndChat(bot, message);
-  } else if (data === 'start_over') {
-    handleStartOver(bot, message);
   }
 });
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
+  logger.info('Received message', msg);
   if (msg.text === 'Start') {
+    logger.info(`Handling "Start" text message from chatId: ${chatId}`);
     await handleStart(bot, msg);
-  } else if (msg.text === 'Start Over') {
-    await handleStartOver(bot, msg);
   } else {
     await handleMessage(bot, msg);
   }
